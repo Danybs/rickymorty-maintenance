@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    inject,
-    OnInit,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { Characters } from '../interface/character.interface';
@@ -26,6 +26,7 @@ import { CharactersService } from '../service/characters.service';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule,
   ],
   providers: [CharactersService],
   templateUrl: './characters.component.html',
@@ -33,16 +34,19 @@ import { CharactersService } from '../service/characters.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharactersComponent implements OnInit {
-  private readonly _cd = inject(ChangeDetectorRef);
+  offset = 0;
+  limit = 20;
+
   private readonly _characterService = inject(CharactersService);
-  readonly characters$: Observable<Characters> =
-    this._characterService.getCharacters();
+  loadCharacters = (offset: number): Observable<Characters> =>
+    this._characterService.getCharacters({ offset });
+  characters$: Observable<Characters> = this.loadCharacters(this.offset);
 
-  charactersSelected: number[] = [];
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    // const a = firstValueFrom(this.characters$);
-    // a.then((a) => console.log(a));
-    // this._characterService.getCharacters();
+  handlePageEvent(event: PageEvent): void {
+    this.limit = event.pageSize;
+    this.offset = event.pageIndex;
+    this.characters$ = this.loadCharacters(event.pageIndex);
   }
 }

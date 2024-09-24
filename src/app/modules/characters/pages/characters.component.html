@@ -1,5 +1,5 @@
-<section class="characters">
-    <ul *ngIf="characters$ | async as characters" class="list">
+<section class="characters" *ngIf="characters$ | async as characters">
+    <ul class="list">
         <li *ngFor="let character of characters.results">
             <mat-card class="card" appearance="raised">
                 <mat-card-header>
@@ -8,7 +8,7 @@
                     <mat-card-subtitle>{{character.gender}}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <p> Estado {{character.status}} </p>
+                    <p> Status {{character.status}} </p>
                 </mat-card-content>
                 <mat-card-footer class="footer">
                     <button mat-mini-fab aria-label="Add button">
@@ -24,7 +24,16 @@
             </mat-card>
         </li>
         <li *ngIf="characters.results.length === 0">
-            No hay personajes
+            No characters avaiable
         </li>
     </ul>
+    <mat-paginator
+        *ngIf="characters.info.count" 
+        [length]="characters.info.count"
+        [pageSize]="limit"
+        [pageIndex]="offset"
+        [showFirstLastButtons]="true"
+        (page)="handlePageEvent($event)"
+        aria-label="select a page">
+    </mat-paginator>
 </section>
