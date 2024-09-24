@@ -1,0 +1,30 @@
+<section class="characters">
+    <ul *ngIf="characters$ | async as characters" class="list">
+        <li *ngFor="let character of characters.results">
+            <mat-card class="card" appearance="raised">
+                <mat-card-header>
+                    <img mat-card-avatar [src]="character.image" class="example-header-image" />
+                    <mat-card-title>{{character.name}}</mat-card-title>
+                    <mat-card-subtitle>{{character.gender}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p> Estado {{character.status}} </p>
+                </mat-card-content>
+                <mat-card-footer class="footer">
+                    <button mat-mini-fab aria-label="Add button">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <button mat-mini-fab aria-label="edit button">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab aria-label="delete button">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-footer>
+            </mat-card>
+        </li>
+        <li *ngIf="characters.results.length === 0">
+            No hay personajes
+        </li>
+    </ul>
+</section>

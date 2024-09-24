@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+/* Box-sizing reset to ensure consistency across all elements */
+html {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  /* Prevents highlighting on touch devices */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  /* Inherits from html to ensure uniformity */
+  margin: 0;
+  padding: 0;
+  /* Resets margin and padding for consistency */
+  border: 0;
+  /* Avoids unexpected border rendering */
+  outline: 0;
+  /* Avoids outlines unless necessary for accessibility */
+  font-size: inherit;
+  /* Ensures consistent font scaling */
+  vertical-align: baseline;
+  /* Aligns text and inline elements */
+}
+
+/* Removes default text-decoration and enhances link accessibility */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Removes default focus styles for all elements except links and interactive elements */
+:focus {
+  outline: none;
+}
+
+/* Optional: Apply default focus style for accessibility */
+:focus-visible {
+  outline: 2px solid #005fcc;
+  /* Customize this color to match your theme */
+}
+
+ul {
+  list-style-type: none;
+}

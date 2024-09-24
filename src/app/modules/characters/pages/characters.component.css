@@ -1,0 +1,22 @@
+.characters {
+  padding: 1rem;
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem
+  }
+
+  .card {
+    padding: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    .footer {
+      display: grid;
+      padding: 0.25rem;
+      grid-auto-flow: column;
+      gap: 0.25rem;
+      justify-content: end;
+    }
+  }
+}
