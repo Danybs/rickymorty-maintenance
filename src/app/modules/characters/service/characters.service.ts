@@ -11,19 +11,30 @@ export class CharactersService {
 
   private readonly httpClient = inject(HttpClient);
 
+  fillParams(filters: Record<string, number | string | boolean>): HttpParams {
+    let httpParams = new HttpParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        httpParams = httpParams.set(key, value);
+      }
+    });
+    return httpParams;
+  }
+
   getCharacters({
+    filters,
     offset: page = 0,
-  }: {
+  }: Partial<{
+    filters: Partial<{ name: string }>;
     offset: number;
-  }): Observable<Characters> {
-    let params = new HttpParams();
-
-    if (page > 0) {
-      // sumamos 1 en la pagina ya que en la documentacion empezamos en 1?
-      // la siguiente pagina es 2.
-      params = params.set('page', (page + 1).toString());
-    }
-
+  }>): Observable<Characters> {
+    const params = this.fillParams({ ...filters, page });
     return this.httpClient.get<Characters>(this.API_URL, { params });
+  }
+
+  getCharacter({ id }: { id: number }): Observable<Characters> {
+    return this.httpClient.get<Characters>(
+      `${this.API_URL}${id ? `/${id}` : ''}`,
+    );
   }
 }

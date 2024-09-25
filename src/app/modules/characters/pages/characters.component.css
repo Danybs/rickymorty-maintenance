@@ -1,8 +1,17 @@
+ .box-form {
+    display: grid;
+    place-items: center;
+    padding: 0.25rem; 
+    .field-name{
+      width: 50%;
+    }
+  }
 .characters {
   padding: 0.5rem;
   display: grid;
   width: 100%;
   place-items: center;
+
   .list {
     display: grid;
     width: 100%;

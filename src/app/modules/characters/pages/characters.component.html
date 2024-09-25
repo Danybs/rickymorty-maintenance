@@ -1,5 +1,11 @@
-<section class="characters" *ngIf="characters$ | async as characters">
-    <ul class="list">
+<div class="box-form">
+    <mat-form-field class="field-name">
+        <mat-label>Name search</mat-label>
+        <input matInput (input)="onSearch($event)" type="text" [(ngModel)]="name" autocomplete="off">
+    </mat-form-field>
+</div>
+<section class="characters" *ngIf="characters$ | async as characters; else noResults">
+    <ul *ngIf="characters" class="list">
         <li *ngFor="let character of characters.results">
             <mat-card class="card" appearance="raised">
                 <mat-card-header>
@@ -23,17 +29,13 @@
                 </mat-card-footer>
             </mat-card>
         </li>
-        <li *ngIf="characters.results.length === 0">
-            No characters avaiable
-        </li>
     </ul>
-    <mat-paginator
-        *ngIf="characters.info.count" 
-        [length]="characters.info.count"
-        [pageSize]="limit"
-        [pageIndex]="offset"
-        [showFirstLastButtons]="true"
-        (page)="handlePageEvent($event)"
-        aria-label="select a page">
+    <mat-paginator *ngIf="characters.info.count" [length]="characters.info.count" [pageSize]="limit"
+        [pageIndex]="offset" [showFirstLastButtons]="true" (page)="handlePageEvent($event)" aria-label="select a page">
     </mat-paginator>
 </section>
+<ng-template #noResults>
+    <section class="characters">
+        <p>Without results</p>
+    </section>
+</ng-template>
